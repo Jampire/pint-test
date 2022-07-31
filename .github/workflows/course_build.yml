@@ -1,0 +1,24 @@
+name: Course Workflow
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: pint-test-${{ github.ref }}-1
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  code-style:
+    needs: [ env-setup ]
+    uses: edu-cat/.github/.github/workflows/_code_style_pint.yml@master
+    with:
+      cache_key: php-cache-v1

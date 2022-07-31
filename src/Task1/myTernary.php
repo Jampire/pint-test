@@ -11,7 +11,8 @@ namespace App\Task1;
  * @param int $n Test number
  * @return string
  */
-function myTernary(int $n): string {
+function myTernary(int $n): string
+{
     $r = $n > 30
         ? 'greater than 30'
         : ($n > 20 ? 'greater than 20'

@@ -16,9 +16,22 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  cache_key: pint-test-build-cache-v1
+
 jobs:
+  env-setup:
+    name: Set variables
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.set-variables.outputs.cache-key }}
+    steps:
+      - name: Set variables
+        id: set-variables
+        run: echo "::set-output name=cache-key::${{ env.cache_key }}"
+
   code-style:
     needs: [ env-setup ]
     uses: edu-cat/.github/.github/workflows/_code_style_pint.yml@master
     with:
-      cache_key: php-cache-v1
+      cache_key: ${{ needs.env-setup.outputs.cache-key }}
